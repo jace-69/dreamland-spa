@@ -1,0 +1,1222 @@
+---
+// DreamLand Spa & Wellness Landing Page
+// Production-grade 1:1 Figma Design Replication to Astro
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DreamLand | Sanctuary for Rest & Balance</title>
+    <meta
+      name="description"
+      content="Step into a space designed for total relaxation. From deep tissue massages to rejuvenating skincare treatments, we help you unwind, recharge, and feel your best inside and out."
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS CDN Engine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cream: '#FAF7F2',
+              'cream-warm': '#F9F8F5',
+              dark: '#181716',
+              'dark-surface': '#181716',
+              muted: '#78716A',
+              'muted-taupe': '#78716A',
+              border: '#E4DDD3',
+              'accent-border': '#E4DDD3'
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+              display: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
+              sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+              script: ['"Great Vibes"', 'cursive']
+            }
+          }
+        }
+      };
+    </script>
+
+    <style>
+      :root {
+        --bg-cream: #FAF7F2;
+        --dark-surface: #181716;
+        --muted-taupe: #78716A;
+        --border-subtle: #E4DDD3;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        background-color: #FAF7F2;
+        color: #181716;
+      }
+
+      .font-script {
+        font-family: 'Great Vibes', cursive;
+      }
+
+      .font-display {
+        font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      }
+
+      .font-serif {
+        font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+      }
+
+      /* 2-Second Alternating Color Animation */
+      @keyframes alternateDream {
+        0%, 100% {
+          color: #181716;
+          text-shadow: 0 0 1px rgba(255, 255, 255, 0.4);
+        }
+        50% {
+          color: #FFFFFF;
+          text-shadow: 0 1px 3px rgba(24, 23, 22, 0.45);
+        }
+      }
+
+      @keyframes alternateLand {
+        0%, 100% {
+          color: #FFFFFF;
+          text-shadow: 0 1px 3px rgba(24, 23, 22, 0.45);
+        }
+        50% {
+          color: #181716;
+          text-shadow: 0 0 1px rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      .word-dream {
+        animation: alternateDream 2s ease-in-out infinite;
+      }
+
+      .word-land {
+        animation: alternateLand 2s ease-in-out infinite;
+      }
+
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal-on-scroll.is-revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .delay-100 { transition-delay: 100ms; }
+      .delay-200 { transition-delay: 200ms; }
+      .delay-300 { transition-delay: 300ms; }
+
+      .facet-polygon {
+        clip-path: polygon(32% 0%, 100% 18%, 88% 100%, 0% 84%, 0% 26%);
+      }
+    </style>
+  </head>
+
+  <body class="bg-[#FAF7F2] text-[#181716] font-sans antialiased overflow-x-hidden selection:bg-[#181716] selection:text-white">
+
+    <!-- MOBILE MENU BACKDROP (DIMMER BACKDROP) -->
+    <div
+      id="mobile-menu-backdrop"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-out md:hidden"
+      aria-hidden="true"
+    ></div>
+
+    <!-- MOBILE MENU OVERLAY (FLOATING DARK CARD MATCHING FIGMA 1:1) -->
+    <div
+      id="mobile-menu-overlay"
+      class="fixed inset-4 z-50 bg-[#181716] rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl border border-white/10 opacity-0 -translate-y-8 scale-95 pointer-events-none transition-all duration-300 ease-out md:hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation Menu"
+    >
+      <!-- Header: Cursive script "DreamLand" logo + white "✕" close button -->
+      <div class="flex items-center justify-between w-full">
+        <a href="#hero" class="mobile-nav-link font-script text-3xl sm:text-4xl text-white tracking-wide select-none">
+          DreamLand
+        </a>
+        <button
+          id="mobile-menu-close"
+          class="text-white p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none"
+          aria-label="Close navigation menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Links: Centered vertical stack (Home, Contact, Services, About, FAQs) in clean white text -->
+      <nav class="flex flex-col items-center justify-center space-y-6 my-auto text-center">
+        <a href="#hero" class="mobile-nav-link text-white text-xl sm:text-2xl font-light hover:text-stone-300 transition-colors tracking-wide">Home</a>
+        <a href="#contact" class="mobile-nav-link text-white text-xl sm:text-2xl font-light hover:text-stone-300 transition-colors tracking-wide">Contact</a>
+        <a href="#services" class="mobile-nav-link text-white text-xl sm:text-2xl font-light hover:text-stone-300 transition-colors tracking-wide">Services</a>
+        <a href="#about" class="mobile-nav-link text-white text-xl sm:text-2xl font-light hover:text-stone-300 transition-colors tracking-wide">About</a>
+        <a href="#faqs" class="mobile-nav-link text-white text-xl sm:text-2xl font-light hover:text-stone-300 transition-colors tracking-wide">FAQs</a>
+      </nav>
+
+      <!-- Bottom Dual Action: White pill button [ Book a Spot ] + white circular button with diagonal arrow ( ↗ ) -->
+      <div class="flex items-center justify-center gap-3 pt-4 w-full max-w-xs mx-auto">
+        <a
+          href="#book"
+          class="mobile-nav-link flex-1 bg-white text-[#181716] font-medium py-3.5 px-6 rounded-full text-center text-sm sm:text-base shadow-lg hover:bg-stone-100 transition-colors"
+        >
+          Book a Spot
+        </a>
+        <a
+          href="#book"
+          class="mobile-nav-link w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#181716] shadow-lg hover:bg-stone-100 transition-colors shrink-0"
+          aria-label="Book a Spot arrow"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+
+
+
+    <!-- SECTION 1: HERO SECTION (FIGMA 1:1 REPLICATION) -->
+    <section id="hero" class="relative w-full min-h-screen lg:min-h-[920px] flex flex-col justify-between overflow-hidden bg-[#181716] text-white select-none">
+      <!-- Full-bleed background image with warm ambient overlays -->
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=2000&q=85"
+          alt="DreamLand Spa Massage Background"
+          class="w-full h-full object-cover object-center scale-105"
+        />
+        <!-- Ambient Dark Gradient Overlays for Figma 1:1 contrast -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/30 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none"></div>
+      </div>
+
+      <!-- Top Header Navigation Bar Overlaid on Hero -->
+      <header class="w-full pt-6 sm:pt-8 pb-4 px-6 sm:px-10 lg:px-16 max-w-[1400px] mx-auto flex items-center justify-between relative z-20">
+        <!-- Logo on Left -->
+        <a href="#hero" class="font-script text-3xl sm:text-4xl text-white tracking-wide hover:opacity-90 transition-opacity select-none drop-shadow-md">
+          DreamLand
+        </a>
+
+        <!-- Desktop Navigation & CTA Buttons on Right -->
+        <div class="hidden md:flex items-center gap-3">
+          <!-- Glass Navigation Pill -->
+          <nav class="bg-black/35 backdrop-blur-md border border-white/15 rounded-full px-7 py-2.5 flex items-center space-x-7 text-sm font-medium text-white/90 shadow-lg">
+            <a href="#hero" class="hover:text-white transition-colors">Home</a>
+            <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            <a href="#services" class="hover:text-white transition-colors">Services</a>
+            <a href="#about" class="hover:text-white transition-colors">About</a>
+            <a href="#faqs" class="hover:text-white transition-colors">FAQs</a>
+          </nav>
+
+          <!-- Action Pill Button "Book a Spot" -->
+          <a
+            href="#book"
+            class="bg-white hover:bg-stone-100 text-[#181716] font-medium px-6 py-2.5 rounded-full text-sm shadow-md transition-all hover:scale-[1.03] active:scale-[0.98]"
+          >
+            Book a Spot
+          </a>
+
+          <!-- Action Circle Button with Diagonal Arrow ↗ -->
+          <a
+            href="#book"
+            class="w-10 h-10 rounded-full bg-white hover:bg-stone-100 text-[#181716] flex items-center justify-center shadow-md transition-all hover:scale-[1.05] shrink-0"
+            aria-label="Book a Spot arrow"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="md:hidden text-white p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/15 hover:bg-white/20 transition-colors focus:outline-none"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </header>
+
+      <!-- Main Hero Content Body -->
+      <div class="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16 md:py-20 z-20 relative flex-1 flex flex-col justify-center">
+        <div class="max-w-2xl">
+          <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-[82px] xl:text-[88px] font-serif font-normal text-white leading-[1.06] tracking-tight mb-6 drop-shadow-md">
+            Relax. Restore.<br />
+            Renew.
+          </h1>
+          <p class="text-sm sm:text-base md:text-lg text-white/85 font-light leading-relaxed max-w-xl mb-8 drop-shadow-sm">
+            Step into a space designed for total relaxation. From deep tissue massages to rejuvenating skincare treatments, we help you unwind, recharge, and feel your best inside and out.
+          </p>
+          <div>
+            <a
+              href="#book"
+              class="inline-flex items-center justify-center bg-white hover:bg-stone-100 text-[#181716] font-medium px-8 py-3.5 rounded-full text-base shadow-xl transition-all hover:scale-[1.03] active:scale-[0.98]"
+            >
+              Book a Spot
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Hero Bottom Bar: Social Proof (Left) & Floating Glass Card (Right) -->
+      <div class="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 pb-8 sm:pb-12 z-20 relative flex flex-col md:flex-row items-start md:items-end justify-between gap-8 md:gap-6">
+        <!-- Bottom Left: Avatar Group + 5,000+ Clients Stat -->
+        <div class="flex items-center gap-4">
+          <div class="flex items-center -space-x-3">
+            <img
+              class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-white/30 object-cover shadow-md"
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
+              alt="Client avatar 1"
+            />
+            <img
+              class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-white/30 object-cover shadow-md"
+              src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80"
+              alt="Client avatar 2"
+            />
+          </div>
+          <div class="flex flex-col">
+            <span class="text-2xl sm:text-3xl font-serif font-normal text-white leading-none mb-1">5,000+</span>
+            <span class="text-xs sm:text-sm text-white/75 font-light tracking-wide">clients restored & refreshed</span>
+          </div>
+        </div>
+
+        <!-- Bottom Right: Floating Dark Glass Card -->
+        <div class="w-full sm:w-[340px] md:w-[360px] lg:w-[380px] bg-[#2A2421]/60 backdrop-blur-xl border border-white/15 rounded-[28px] p-5 sm:p-6 shadow-2xl">
+          <div class="flex items-start justify-between gap-3 mb-4">
+            <p class="text-xs sm:text-sm text-white/85 font-light leading-snug max-w-[220px]">
+              A premium wellness experience tailored to your body, your needs, your peace.
+            </p>
+            <a
+              href="#services"
+              class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white hover:bg-stone-100 text-[#181716] flex items-center justify-center shrink-0 shadow-md transition-all hover:scale-105"
+              aria-label="Learn more about wellness experience"
+            >
+              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </a>
+          </div>
+          <div class="w-full h-36 sm:h-40 rounded-2xl overflow-hidden shadow-inner relative">
+            <img
+              src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+              alt="Spa treatment thumbnail preview"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION 2: "More Than a Treatment, A Full Experience." -->
+    <section class="py-20 md:py-32 bg-[#FAF7F2]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="max-w-2xl mx-auto text-center mb-16 md:mb-20">
+          <h2 class="reveal-on-scroll text-3xl sm:text-4xl md:text-5xl font-serif text-[#181716] leading-tight mb-5">
+            More Than a Treatment,<br />A Full Experience.
+          </h2>
+          <p class="reveal-on-scroll delay-100 text-stone-600 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto">
+            Every visit is designed to help you disconnect from stress and reconnect with yourself through calming, intentional care.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
+          
+          <!-- Card 1 -->
+          <div class="reveal-on-scroll flex flex-col items-center text-center group">
+            <div class="w-full max-w-[270px] h-[380px] rounded-full overflow-hidden mb-6 shadow-md bg-stone-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80"
+                alt="Soothing scents and sound"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+            </div>
+            <h3 class="text-stone-800 text-base font-normal max-w-[190px] leading-snug">
+              Soothing scents and sound
+            </h3>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="reveal-on-scroll delay-100 flex flex-col items-center text-center group">
+            <div class="w-full max-w-[270px] h-[380px] rounded-full overflow-hidden mb-6 shadow-md bg-stone-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+                alt="Personalized service approach"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+            </div>
+            <h3 class="text-stone-800 text-base font-normal max-w-[190px] leading-snug">
+              Personalized service approach
+            </h3>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="reveal-on-scroll delay-200 flex flex-col items-center text-center group">
+            <div class="w-full max-w-[270px] h-[380px] rounded-full overflow-hidden mb-6 shadow-md bg-stone-200 relative">
+              <img
+                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+                alt="Peaceful, minimalist interiors"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+            </div>
+            <h3 class="text-stone-800 text-base font-normal max-w-[190px] leading-snug">
+              Peaceful, minimalist interiors
+            </h3>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="max-w-7xl mx-auto px-6">
+      <hr class="border-t border-stone-200/80" />
+    </div>
+
+
+    <!-- SECTION 3: SERVICES ("01 Massage Therapy") -->
+    <section id="services" class="py-20 md:py-32 bg-[#FAF7F2]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="reveal-on-scroll mb-10">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-stone-300 text-xs text-stone-700 font-medium bg-stone-50">
+            <span class="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
+            Services
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <div class="lg:col-span-5">
+            <div class="reveal-on-scroll text-6xl md:text-7xl font-serif text-[#181716] mb-5 tracking-tight font-light">
+              01
+            </div>
+            
+            <h2 class="reveal-on-scroll delay-100 text-3xl md:text-4xl font-serif text-[#181716] mb-4">
+              Massage Therapy
+            </h2>
+
+            <p class="reveal-on-scroll delay-200 text-stone-600 font-light leading-relaxed mb-8 max-w-md text-sm md:text-base">
+              Relaxing, deep tissue, and therapeutic massages to relieve tension and improve circulation.
+            </p>
+
+            <div class="reveal-on-scroll delay-200 flex items-center gap-3 mb-8">
+              <button
+                class="w-11 h-11 rounded-full bg-[#181716] text-white flex items-center justify-center hover:bg-stone-800 transition-colors shadow"
+                aria-label="Previous Service"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                class="w-11 h-11 rounded-full bg-[#181716] text-white flex items-center justify-center hover:bg-stone-800 transition-colors shadow"
+                aria-label="Next Service"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="reveal-on-scroll delay-300 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#181716]"></span>
+              <span class="w-2.5 h-2.5 rounded-full border border-stone-400 bg-transparent"></span>
+              <span class="w-2.5 h-2.5 rounded-full border border-stone-400 bg-transparent"></span>
+              <span class="w-2.5 h-2.5 rounded-full border border-stone-400 bg-transparent"></span>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="reveal-on-scroll delay-100 relative max-w-md mx-auto lg:ml-auto">
+              <div class="absolute -inset-3 sm:-inset-4 border border-stone-400/80 rounded-[32px] translate-x-3 translate-y-3 pointer-events-none"></div>
+              
+              <div class="relative rounded-[28px] overflow-hidden shadow-xl bg-stone-100 h-[420px] sm:h-[480px]">
+                <img
+                  src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=800&q=80"
+                  alt="Therapeutic Massage Therapy"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="max-w-7xl mx-auto px-6">
+      <hr class="border-t border-stone-200/80" />
+    </div>
+
+
+    <!-- SECTION 4: "Simple Booking. Seamless Experience." -->
+    <section id="book" class="py-20 md:py-32 bg-[#FAF7F2]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="reveal-on-scroll mb-10">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-stone-300 text-xs text-stone-700 font-medium bg-stone-50">
+            <span class="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
+            Book appointment
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          <div class="lg:col-span-5">
+            <h2 class="reveal-on-scroll text-3xl sm:text-4xl md:text-5xl font-serif text-[#181716] leading-tight mb-5">
+              Simple Booking.<br />
+              Seamless<br />
+              Experience.
+            </h2>
+            
+            <p class="reveal-on-scroll delay-100 text-stone-600 font-light leading-relaxed mb-8 max-w-sm text-sm md:text-base">
+              We make it easy to relax — from scheduling to your final moment of calm.
+            </p>
+
+            <div class="reveal-on-scroll delay-200 rounded-3xl overflow-hidden shadow-lg max-w-sm h-52 sm:h-60">
+              <img
+                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=800&q=80"
+                alt="Calming organic massage oils"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 flex flex-col divide-y divide-stone-200/90">
+            
+            <!-- Step 01 -->
+            <div class="reveal-on-scroll pb-6 pt-2">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-baseline gap-4">
+                  <span class="text-stone-400 font-serif text-lg">01</span>
+                  <h3 class="text-xl md:text-2xl font-serif text-stone-900 font-normal">
+                    Choose Your Treatment
+                  </h3>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center pl-8">
+                <p class="sm:col-span-7 text-stone-500 font-light text-sm leading-relaxed">
+                  Select from our curated wellness services.
+                </p>
+                <div class="sm:col-span-5 rounded-2xl overflow-hidden shadow-sm h-28">
+                  <img
+                    src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+                    alt="Client choosing treatment calmly"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 02 -->
+            <div class="reveal-on-scroll py-6 flex items-center justify-between group cursor-pointer">
+              <div class="flex items-baseline gap-4">
+                <span class="text-stone-400 font-serif text-lg">02</span>
+                <h3 class="text-xl md:text-2xl font-serif text-stone-900 font-normal group-hover:text-stone-600 transition-colors">
+                  Book Your Time
+                </h3>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-400 group-hover:bg-stone-200 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Step 03 -->
+            <div class="reveal-on-scroll py-6 flex items-center justify-between group cursor-pointer">
+              <div class="flex items-baseline gap-4">
+                <span class="text-stone-400 font-serif text-lg">03</span>
+                <h3 class="text-xl md:text-2xl font-serif text-stone-900 font-normal group-hover:text-stone-600 transition-colors">
+                  Arrive & Relax
+                </h3>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-400 group-hover:bg-stone-200 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Step 04 -->
+            <div class="reveal-on-scroll py-6 flex items-center justify-between group cursor-pointer">
+              <div class="flex items-baseline gap-4">
+                <span class="text-stone-400 font-serif text-lg">04</span>
+                <h3 class="text-xl md:text-2xl font-serif text-stone-900 font-normal group-hover:text-stone-600 transition-colors">
+                  Leave Refreshed
+                </h3>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-400 group-hover:bg-stone-200 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="max-w-7xl mx-auto px-6">
+      <hr class="border-t border-stone-200/80" />
+    </div>
+
+
+    <!-- SECTION 5: "What Our Clients Say." (TESTIMONIALS) -->
+    <section class="py-20 md:py-32 bg-[#FAF7F2]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="reveal-on-scroll mb-10">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-stone-300 text-xs text-stone-700 font-medium bg-stone-50">
+            <span class="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
+            Testimonials
+          </span>
+        </div>
+
+        <div class="mb-12">
+          <h2 class="reveal-on-scroll text-3xl sm:text-4xl md:text-5xl font-serif text-[#181716] leading-tight mb-3">
+            What Our Clients<br />Say.
+          </h2>
+          <p class="reveal-on-scroll delay-100 text-stone-600 font-light text-sm md:text-base">
+            Real experiences from people who trust Veloria for their wellness.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <!-- Left Column: Circular Portrait Image -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="reveal-on-scroll w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl relative bg-stone-200">
+              <img
+                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80"
+                alt="Joyful client embracing tranquility"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Right Column: Avatar Row, Quote, Author, Controls -->
+          <div class="lg:col-span-7">
+            
+            <div class="reveal-on-scroll flex items-center gap-3 mb-8">
+              <img
+                class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+                alt="Reviewer Avatar"
+              />
+              <img
+                class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+                alt="Reviewer Avatar"
+              />
+              <img
+                class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm ring-2 ring-stone-900"
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
+                alt="Reviewer Caroline Hoffman"
+              />
+              <img
+                class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=150&q=80"
+                alt="Reviewer Avatar"
+              />
+              <img
+                class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"
+                alt="Reviewer Avatar"
+              />
+            </div>
+
+            <blockquote class="reveal-on-scroll delay-100 text-stone-700 font-light text-base sm:text-lg italic leading-relaxed mb-6 max-w-xl">
+              “Booking was effortless, and the experience felt calm from the very first click. The spa truly delivers the same elegance you see on the website.”
+            </blockquote>
+
+            <p class="reveal-on-scroll delay-200 text-stone-900 font-medium text-base mb-8">
+              — Caroline Hoffman
+            </p>
+
+            <div class="reveal-on-scroll delay-300 flex items-center gap-3">
+              <button
+                class="w-11 h-11 rounded-full bg-[#181716] text-white flex items-center justify-center hover:bg-stone-800 transition-colors shadow"
+                aria-label="Previous Testimonial"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                class="w-11 h-11 rounded-full bg-[#181716] text-white flex items-center justify-center hover:bg-stone-800 transition-colors shadow"
+                aria-label="Next Testimonial"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 6: "Wellness You Can Feel." (DARK CALLOUT BANNER) -->
+    <section class="relative bg-[#181716] text-white py-20 md:py-28 overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-20 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80"
+          alt="Ambient Spa Lighting"
+          class="w-full h-full object-cover filter blur-sm"
+        />
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <div class="lg:col-span-5">
+            <div class="reveal-on-scroll rounded-3xl overflow-hidden shadow-2xl border border-white/10 max-w-md mx-auto h-[380px] sm:h-[440px]">
+              <img
+                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80"
+                alt="Radiant client smiling peacefully on massage bed"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 lg:pl-4">
+            <h2 class="reveal-on-scroll text-4xl sm:text-5xl md:text-6xl font-serif text-white leading-tight mb-6">
+              Wellness You Can<br />Feel.
+            </h2>
+
+            <p class="reveal-on-scroll delay-100 text-stone-300 font-light text-base md:text-lg leading-relaxed max-w-xl mb-12">
+              We combine expert care, premium products, and a calming environment to deliver a truly elevated spa experience.
+            </p>
+
+            <div class="reveal-on-scroll delay-200 flex items-start gap-12 sm:gap-20 border-t border-white/15 pt-8">
+              <div>
+                <div class="text-4xl sm:text-5xl font-light text-white tracking-tight mb-1">
+                  500+
+                </div>
+                <div class="text-xs sm:text-sm text-stone-400 font-light leading-snug">
+                  positive<br />reviews
+                </div>
+              </div>
+              
+              <div>
+                <div class="text-4xl sm:text-5xl font-light text-white tracking-tight mb-1">
+                  4.9<span class="text-2xl text-stone-400 font-light">/5</span>
+                </div>
+                <div class="text-xs sm:text-sm text-stone-400 font-light leading-snug">
+                  Service<br />rating
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="max-w-7xl mx-auto px-6">
+      <hr class="border-t border-stone-200/80" />
+    </div>
+
+
+    <!-- SECTION 7: "Everything You Need to Know." (FAQ ACCORDION) -->
+    <section id="faqs" class="py-20 md:py-32 bg-[#FAF7F2]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="reveal-on-scroll mb-10">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-stone-300 text-xs text-stone-700 font-medium bg-stone-50">
+            <span class="w-1.5 h-1.5 rounded-full bg-stone-900"></span>
+            FAQs
+          </span>
+        </div>
+
+        <div class="mb-12">
+          <h2 class="reveal-on-scroll text-3xl sm:text-4xl md:text-5xl font-serif text-[#181716] leading-tight mb-3">
+            Everything You<br />Need to Know.
+          </h2>
+          <p class="reveal-on-scroll delay-100 text-stone-600 font-light text-sm md:text-base">
+            Helpful answers to make your visit smooth and stress-free.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <!-- Left Column: Accordion Items List -->
+          <div class="lg:col-span-6 flex flex-col divide-y divide-stone-200/90">
+            
+            <!-- Accordion Item 1 (Expanded by Default) -->
+            <div class="faq-item reveal-on-scroll py-6">
+              <button
+                class="faq-toggle w-full flex items-center justify-between text-left group focus:outline-none"
+                aria-expanded="true"
+              >
+                <span class="text-lg md:text-xl font-serif text-stone-900 font-normal">
+                  Do I need to book in advance?
+                </span>
+                <span class="faq-icon text-stone-500 text-2xl font-light w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors shrink-0 ml-4">
+                  −
+                </span>
+              </button>
+              <div class="faq-content mt-3 text-stone-600 font-light text-sm leading-relaxed max-w-lg">
+                Yes, we recommend booking to secure your preferred time.
+              </div>
+            </div>
+
+            <!-- Accordion Item 2 -->
+            <div class="faq-item reveal-on-scroll py-6">
+              <button
+                class="faq-toggle w-full flex items-center justify-between text-left group focus:outline-none"
+                aria-expanded="false"
+              >
+                <span class="text-lg md:text-xl font-serif text-stone-900 font-normal">
+                  What should I bring?
+                </span>
+                <span class="faq-icon text-stone-500 text-2xl font-light w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors shrink-0 ml-4">
+                  +
+                </span>
+              </button>
+              <div class="faq-content hidden mt-3 text-stone-600 font-light text-sm leading-relaxed max-w-lg">
+                Just yourself! We provide fresh robes, slippers, plush towels, and all grooming amenities needed before and after your treatment.
+              </div>
+            </div>
+
+            <!-- Accordion Item 3 -->
+            <div class="faq-item reveal-on-scroll py-6">
+              <button
+                class="faq-toggle w-full flex items-center justify-between text-left group focus:outline-none"
+                aria-expanded="false"
+              >
+                <span class="text-lg md:text-xl font-serif text-stone-900 font-normal">
+                  Do you use skin-friendly products?
+                </span>
+                <span class="faq-icon text-stone-500 text-2xl font-light w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors shrink-0 ml-4">
+                  +
+                </span>
+              </button>
+              <div class="faq-content hidden mt-3 text-stone-600 font-light text-sm leading-relaxed max-w-lg">
+                Yes, our oils, lotions, and masks are 100% certified organic, cruelty-free, and dermatologically tested for maximum skin nourishment.
+              </div>
+            </div>
+
+            <!-- Accordion Item 4 -->
+            <div class="faq-item reveal-on-scroll py-6">
+              <button
+                class="faq-toggle w-full flex items-center justify-between text-left group focus:outline-none"
+                aria-expanded="false"
+              >
+                <span class="text-lg md:text-xl font-serif text-stone-900 font-normal">
+                  Are your products safe for sensitive skin?
+                </span>
+                <span class="faq-icon text-stone-500 text-2xl font-light w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors shrink-0 ml-4">
+                  +
+                </span>
+              </button>
+              <div class="faq-content hidden mt-3 text-stone-600 font-light text-sm leading-relaxed max-w-lg">
+                Absolutely. Our therapists conduct a consultation prior to every session to customize formulas specifically for reactive and sensitive skin profiles.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Faceted Geometric Masked Image -->
+          <div class="lg:col-span-6 flex justify-center">
+            <div class="reveal-on-scroll delay-100 facet-polygon w-full max-w-md h-[400px] sm:h-[460px] overflow-hidden shadow-2xl bg-stone-200">
+              <img
+                src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+                alt="Warm therapeutic oils applied with care"
+                class="w-full h-full object-cover scale-105"
+              />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="max-w-7xl mx-auto px-6">
+      <hr class="border-t border-stone-200/80" />
+    </div>
+
+
+    <!-- SECTION 8: "Take Time for Yourself" (FLOATING GALLERY COLLAGE) -->
+    <section class="py-20 md:py-32 bg-[#FAF7F2] overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- Top Floating Circle Image -->
+        <div class="flex justify-center mb-10 md:mb-14">
+          <div class="reveal-on-scroll w-48 h-48 sm:w-60 sm:h-60 rounded-full overflow-hidden shadow-xl bg-stone-200">
+            <img
+              src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+              alt="Botanical Facial Treatment"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        </div>
+
+        <!-- Middle Row: Left Circle, Center Content, Right Circle -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          
+          <!-- Lower Left Circle -->
+          <div class="md:col-span-4 flex justify-center md:justify-start">
+            <div class="reveal-on-scroll delay-100 w-52 h-52 sm:w-64 sm:h-64 rounded-full overflow-hidden shadow-xl bg-stone-200">
+              <img
+                src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80"
+                alt="Warm candlelit massage sanctuary"
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+
+          <!-- Center Content: Title, Subtitle, CTA Button -->
+          <div class="md:col-span-4 text-center my-6 md:my-0 px-4">
+            <h2 class="reveal-on-scroll text-3xl sm:text-4xl md:text-5xl font-serif text-[#181716] leading-tight mb-4">
+              Take Time for Yourself
+            </h2>
+            <p class="reveal-on-scroll delay-100 text-stone-600 font-light text-sm sm:text-base leading-relaxed mb-8 max-w-xs mx-auto">
+              Book your session today and experience relaxation at a higher level.
+            </p>
+            <div class="reveal-on-scroll delay-200">
+              <a
+                href="#book"
+                class="w-full sm:w-auto inline-flex items-center justify-center bg-white border border-stone-300 text-stone-900 font-medium px-8 py-3.5 rounded-full text-sm shadow-sm hover:bg-stone-50 hover:border-stone-400 transition-all hover:scale-[1.02]"
+              >
+                Book a Spot
+              </a>
+            </div>
+          </div>
+
+          <!-- Lower Right Circle -->
+          <div class="md:col-span-4 flex justify-center md:justify-end">
+            <div class="reveal-on-scroll delay-300 w-52 h-52 sm:w-64 sm:h-64 rounded-full overflow-hidden shadow-xl bg-stone-200">
+              <img
+                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+                alt="Aromatherapy towels and botanical elements"
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 9: FOOTER & SIGNATURE CALLIGRAPHY -->
+    <footer id="contact" class="relative bg-[#181716] text-white pt-16 md:pt-24 pb-8 overflow-hidden">
+      <!-- Dark Spa Background Texture with Warm Ambient Glow -->
+      <div class="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80"
+          alt="Spa Warm Ambiance"
+          class="w-full h-full object-cover filter brightness-75 contrast-125"
+        />
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6">
+        
+        <!-- Giant Signature Cursive Logo: "DreamLand" -->
+        <div class="reveal-on-scroll font-script text-white/90 text-6xl sm:text-8xl md:text-[130px] lg:text-[180px] leading-none select-none text-center tracking-wide mb-10 md:mb-14 drop-shadow-md">
+          DreamLand
+        </div>
+
+        <!-- Upper Footer Row: Newsletter & Desktop Quick Nav -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center border-t border-white/10 pt-10 pb-12">
+          
+          <!-- Left Column: "Stay in the Loop" Newsletter -->
+          <div class="lg:col-span-6">
+            <h3 class="text-xl md:text-2xl font-serif text-white font-normal mb-1.5">
+              Stay in the Loop
+            </h3>
+            <p class="text-stone-400 font-light text-sm mb-5">
+              Get updates on news from DreamLand
+            </p>
+            
+            <form class="flex flex-col sm:flex-row gap-3 max-w-md" onsubmit="event.preventDefault();">
+              <div class="relative flex-1">
+                <input
+                  type="email"
+                  value="kyrfrost002@gmail.com"
+                  placeholder="Enter your email"
+                  class="w-full bg-white/10 border border-white/20 rounded-full px-5 py-3 text-sm text-white placeholder-stone-400 focus:outline-none focus:border-white/60 transition-colors"
+                />
+              </div>
+              <button
+                type="submit"
+                class="bg-white text-stone-900 font-medium px-7 py-3 rounded-full text-sm hover:bg-stone-100 transition-colors shadow-md"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+
+          <!-- Right Column: Navigation Links & Book CTA -->
+          <div class="lg:col-span-6 flex flex-wrap items-center justify-start lg:justify-end gap-6 text-sm text-stone-300 font-light">
+            <a href="#hero" class="hover:text-white transition-colors">Home</a>
+            <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            <a href="#services" class="hover:text-white transition-colors">Services</a>
+            <a href="#about" class="hover:text-white transition-colors">About</a>
+            <a href="#faqs" class="hover:text-white transition-colors">FAQs</a>
+            
+            <div class="flex items-center ml-2">
+              <a
+                href="#book"
+                class="bg-white text-stone-900 font-medium px-5 py-2.5 rounded-full text-sm shadow hover:bg-stone-100 transition-colors"
+              >
+                Book a Spot
+              </a>
+              <a
+                href="#book"
+                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-stone-900 ml-2 shadow hover:bg-stone-100 transition-colors"
+                aria-label="Book a Spot arrow"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- Lower Footer Row: Brand Info, Socials, & Link Columns -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 border-t border-white/10 pt-10 pb-12">
+          
+          <!-- Brand Info -->
+          <div id="about" class="md:col-span-5">
+            <div class="font-serif text-2xl font-normal text-white mb-2">
+              DreamLand
+            </div>
+            <p class="text-stone-400 text-sm font-light mb-4">
+              Relax. Restore. Renew.
+            </p>
+            <p class="text-stone-400 text-sm font-light">
+              dreamland@gamil.com
+            </p>
+            <p class="text-stone-400 text-sm font-light mb-6">
+              +123-456-789
+            </p>
+            
+            <!-- Social Icons: X (Twitter), LinkedIn, Instagram -->
+            <div class="flex items-center gap-4 text-stone-400">
+              <a href="#" class="hover:text-white transition-colors" aria-label="X (Twitter)">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="#" class="hover:text-white transition-colors" aria-label="LinkedIn">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                </svg>
+              </a>
+              <a href="#" class="hover:text-white transition-colors" aria-label="Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Navigation Columns -->
+          <div class="md:col-span-7 flex justify-between sm:justify-end gap-16 sm:gap-24">
+            
+            <!-- Quick Links -->
+            <div>
+              <h4 class="text-white font-medium text-sm mb-4">Quick Links</h4>
+              <ul class="space-y-2.5 text-stone-400 text-sm font-light">
+                <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                <li><a href="#book" class="hover:text-white transition-colors">Bookings</a></li>
+                <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#book" class="hover:text-white transition-colors">Pricing</a></li>
+              </ul>
+            </div>
+
+            <!-- Company -->
+            <div>
+              <h4 class="text-white font-medium text-sm mb-4">Company</h4>
+              <ul class="space-y-2.5 text-stone-400 text-sm font-light">
+                <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                <li><a href="#faqs" class="hover:text-white transition-colors">FAQs</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Copyright Bar (Verbatim transcription) -->
+      <div class="bg-black py-5 text-center text-xs text-stone-400 font-light border-t border-white/5 tracking-wider">
+        Copy right &copy; 2026 DreamLand All rights reserved!
+      </div>
+    </footer>
+
+
+    <!-- ========================================================================= -->
+    <!-- INTERACTIVE JAVASCRIPT: MENU, FAQ ACCORDION, INTERSECTION OBSERVER        -->
+    <!-- ========================================================================= -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // -------------------------------------------------------------
+        // -------------------------------------------------------------
+        // 1. Mobile Menu Overlay Handler (Card Modal + Dimmer Backdrop)
+        // -------------------------------------------------------------
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menuClose = document.getElementById('mobile-menu-close');
+        const menuOverlay = document.getElementById('mobile-menu-overlay');
+        const menuBackdrop = document.getElementById('mobile-menu-backdrop');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMenu() {
+          if (!menuOverlay || !menuBackdrop) return;
+          menuOverlay.classList.remove('opacity-0', '-translate-y-8', 'scale-95', 'pointer-events-none');
+          menuOverlay.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
+          
+          menuBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+          menuBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+
+          document.body.style.overflow = 'hidden';
+          if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMenu() {
+          if (!menuOverlay || !menuBackdrop) return;
+          menuOverlay.classList.remove('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
+          menuOverlay.classList.add('opacity-0', '-translate-y-8', 'scale-95', 'pointer-events-none');
+
+          menuBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+          menuBackdrop.classList.add('opacity-0', 'pointer-events-none');
+
+          document.body.style.overflow = '';
+          if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', openMenu);
+        if (menuClose) menuClose.addEventListener('click', closeMenu);
+        if (menuBackdrop) menuBackdrop.addEventListener('click', closeMenu);
+
+        mobileLinks.forEach((link) => {
+          link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && menuOverlay && menuOverlay.classList.contains('opacity-100')) {
+            closeMenu();
+          }
+        });
+
+        // -------------------------------------------------------------
+        // 2. FAQ Accordion Handler
+        // -------------------------------------------------------------
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+
+        faqToggles.forEach((toggle) => {
+          toggle.addEventListener('click', () => {
+            const item = toggle.closest('.faq-item');
+            if (!item) return;
+            const content = item.querySelector('.faq-content');
+            const icon = item.querySelector('.faq-icon');
+            if (!content || !icon) return;
+
+            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+            // Close other items
+            faqToggles.forEach((otherToggle) => {
+              if (otherToggle !== toggle) {
+                const otherItem = otherToggle.closest('.faq-item');
+                const otherContent = otherItem?.querySelector('.faq-content');
+                const otherIcon = otherItem?.querySelector('.faq-icon');
+                if (otherContent && otherIcon) {
+                  otherContent.classList.add('hidden');
+                  otherIcon.textContent = '+';
+                  otherToggle.setAttribute('aria-expanded', 'false');
+                }
+              }
+            });
+
+            if (isExpanded) {
+              content.classList.add('hidden');
+              icon.textContent = '+';
+              toggle.setAttribute('aria-expanded', 'false');
+            } else {
+              content.classList.remove('hidden');
+              icon.textContent = '−';
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+        });
+
+        // -------------------------------------------------------------
+        // 3. Native IntersectionObserver Scroll Flow (Directive 6)
+        // -------------------------------------------------------------
+        const reveals = document.querySelectorAll('.reveal-on-scroll');
+
+        const observerOptions = {
+          threshold: 0.08,
+          rootMargin: '0px 0px -40px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        reveals.forEach((el) => {
+          revealObserver.observe(el);
+        });
+      });
+    </script>
+  </body>
+</html>
+
